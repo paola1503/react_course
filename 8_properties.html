@@ -1,0 +1,47 @@
+<html>
+    <head>
+       <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js">
+    </script> 
+        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js">
+    </script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js">
+    </script>
+    <style>
+        .liststyle{
+            color:blue;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+
+    </head>
+    <body>
+        <div id="area">
+        
+        </div>
+        <script type="text/babel">
+        //use JavaScript inheritance
+        class List extends React.Component{
+            render(){
+                return<ul className="liststyle">
+                <li>{this.props.item1}</li>
+                <li>{this.props.item2}</li>
+            </ul>
+            }
+        }
+        </script>
+    <script type="text/babel">
+        var style={
+            style:{
+                color:"pink"
+            }
+        }
+
+        //create the component
+        var lists=<div>
+            <List item1="hi1" item2="hi2"/>
+            <List item1="hi3" item2="hi4"/></div>
+        //draw the component and print it in the html
+        ReactDOM.render(lists,document.getElementById("area"));
+    </script>
+    </body>
+</html>
