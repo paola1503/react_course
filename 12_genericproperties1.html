@@ -1,0 +1,59 @@
+<html>
+    <head>
+       <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js">
+    </script> 
+        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js">
+    </script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js">
+    </script>
+    <style>
+        .liststyle{
+            color:blue;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+
+    </head>
+    <body>
+        <div id="area">
+        
+        </div>
+        <script type="text/babel">
+        class Student{
+            constructor(name,mark){
+                this.name=name;
+                this.mark=mark;
+            }
+        }
+
+        class Row extends React.Component{
+            render(){
+                let object=this.props.item;
+                let template=``;
+                for(let property in object){
+                    template+=`${object[property]},`;
+                }
+                return<li>{template}</li>
+            }
+        }
+        class List extends React.Component{
+            render(){
+                return<ul>
+                    {this.props.items.map((item)=><Row key={item.name} item={item}/>)}
+            </ul>
+            }
+        }
+        </script>
+        <script type="text/babel">
+        let p1=new Student("Anna",6);
+        let p2=new Student("John",4);
+        let list=[p1,p2];
+
+        var lists=<div>
+            <List items={list}/>
+        </div>
+        //draw the component and print it in the html
+        ReactDOM.render(lists,document.getElementById("area"));
+    </script>
+    </body>
+</html>
