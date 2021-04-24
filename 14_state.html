@@ -1,0 +1,48 @@
+<html>
+    <head>
+       <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js">
+    </script> 
+        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js">
+    </script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js">
+    </script>
+    <style>
+        .liststyle{
+            color:blue;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+
+    </head>
+    <body>
+        <div id="area">
+        
+        </div>
+        <script type="text/babel">
+        class RangeBox extends React.Component{
+
+            constructor(props){
+                super(props);
+                this.state={
+                    value:4
+                }
+            }
+
+            render(){
+                return <div>
+                    <span>{this.state.value}</span>
+                    <input type="button" value="+"/>
+                    <input type="button" value="-"/>
+                </div>
+            }
+        }
+ 
+        </script>
+        <script type="text/babel">
+            //jsx
+            let box=<RangeBox value="4"/>
+        
+        ReactDOM.render(box,document.getElementById("area"));
+    </script>
+    </body>
+</html>
