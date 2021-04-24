@@ -1,0 +1,71 @@
+<html>
+    <head>
+       <script src="https://unpkg.com/react@17.0.2/umd/react.development.js">
+    </script> 
+        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js">
+    </script>
+        <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js">
+    </script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js">
+    </script>
+    <style>
+        .liststyle{
+            color:blue;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+
+    </head>
+    <body>
+        <div id="area">
+        
+        </div>
+        <script type="text/babel">
+        //RangeBox is the class and therefore its objects have a state variable
+        class RangeBox extends React.Component{
+
+            constructor(props){
+                super(props);
+                this.state={
+                    value:4
+                }
+                this.increase=this.increase.bind(this);
+                this.decrease=this.decrease.bind(this);
+            }
+
+            increase(){
+                this.setState({
+                    value:this.state.value+1
+                })
+            }
+
+            decrease(){
+                this.setState({
+                    value:this.state.value-1
+                })
+            }
+
+            render(){
+                return <div>
+                    <span>{this.state.value}</span>
+                    <input type="button" value="+" onClick={this.increase}/>
+                    <input type="button" value="-" onClick={this.decrease}/>
+                </div>
+            }
+        }
+        //assign compulsory properties to RangeBox
+        RangeBox.propTypes={
+            value:PropTypes.number.isRequired,
+            min:PropTypes.number.isRequired,
+            max:PropTypes.number.isRequired
+        }
+ 
+        </script>
+        <script type="text/babel">
+            //jsx
+            let box=<RangeBox value={4} max={10} min={0}/>
+        
+        ReactDOM.render(box,document.getElementById("area"));
+    </script>
+    </body>
+</html>
