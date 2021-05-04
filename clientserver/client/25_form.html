@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js">
+    </script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js">
+    </script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js">
+    </script>
+    <script src="https://unpkg.com/axios@0.2.1/dist/axios.js">
+    </script>
+
+</head>
+
+<body>
+    <div id="area">
+    </div>
+        <script type="text/babel">
+            class StudentRow extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.delete=this.delete.bind(this);
+                    }
+
+                    delete(){
+                     console.log("from row"+this.props.student);
+                     this.props.onDelete(this.props.student);
+                    }
+                    
+                render(){
+                return <tr>
+                        <td>{this.props.student.name}</td>
+                        <td>{this.props.student.mark}</td>
+                        <td><input type="button" value="delete" onClick={this.delete}/></td>
+                        </tr>
+            }
+        }
+        
+            class StudentsList extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.state={
+                        students:[]
+                    }
+                    this.delete=this.delete.bind(this);
+                }
+
+                componentDidMount(){
+                    axios.get("http://localhost:3000/students").then((data)=>{
+                        console.log(data);
+                        this.setState({
+                            students:data
+                        });
+                });
+            }
+
+                delete(student){
+                    axios.delete(`http://localhost:3000/students/${student.name}`).then((a)=>{
+                        console.log("It's been deleted from the list");
+                        //once we,ve deleted, I want to reload the list
+                        return axios.get("http://localhost:3000/students");
+                    }).then((data)=>{
+                        this.setState({
+                        students:data
+                        })
+                    })
+                }
+
+                render(){
+                    return <table>
+                        <tbody>
+                            {this.state.students.map((student)=><StudentRow key={student.name} onDelete={this.delete} student={student}/>)}
+                            </tbody>
+                        </table>
+                }
+            }
+
+            class Form extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.state={
+                        name:"",
+                        mark:0
+                    }
+                    this.uploadName=this.uploadName.bind(this);
+                    this.uploadMark=this.uploadMark.bind(this);
+                }
+
+                //events released from input text
+                uploadName(e){
+                    this.setState({name:e.target.value});
+                    }
+
+                    uploadMark(e){
+                    this.setState({mark:e.target.value});
+                    }
+
+                render(){
+                 return <form>
+                        <p>
+                        Name:<input type="text" name="name" value={this.state.name} onChange={this.uploadName}/>
+                        </p><p>
+                        Mark:<input type="text" name="mark" value={this.state.mark} onChange={this.uploadMark}/>
+                        </p><p>
+                        <input type="button" value="insert"/>
+                        </p>                        
+                    </form>
+                }
+            }
+
+        </script>
+        <script type="text/babel">
+                let table=<div><StudentsList/><Form/></div>
+                ReactDOM.render(table,document.getElementById("area"));
+        </script>
+    
+   
+</body>
+
+</html>
