@@ -1,9 +1,13 @@
 const express = require('express')
 const app = express()
+const bodyParser=require("body-parser");
 const port = 3000
 //activate cross origin request share
 var cors=require("cors");
+
 app.use(cors());
+//server ability to read object in json that come from a client
+app.use(bodyParser.json());
 
 let students=[];
 students.push({"name":"Joe",mark:5},{"name":"Anna",mark:7});
@@ -22,6 +26,7 @@ app.delete("/students/:name",(req,res)=>{
 })
 
 app.post("/students",(req,res)=>{
+  //post petition
   students.push(req.body);
   res.status(201).send();
 })
