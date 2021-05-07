@@ -86,6 +86,7 @@
                     }
                     this.uploadName=this.uploadName.bind(this);
                     this.uploadMark=this.uploadMark.bind(this);
+                    this.insert=this.insert.bind(this);
                 }
 
                 //events released from input text
@@ -93,9 +94,17 @@
                     this.setState({name:e.target.value});
                     }
 
-                    uploadMark(e){
+                uploadMark(e){
                     this.setState({mark:e.target.value});
                     }
+
+                insert(){
+                    axios.post("http://localhost:3000/students",this.state).then(()=>{
+                        return axios.get("http://localhost:3000/students");
+                    }).then((students)=>{
+                        console.log(students);
+                    })
+                }
 
                 render(){
                  return <form>
@@ -104,7 +113,7 @@
                         </p><p>
                         Mark:<input type="text" name="mark" value={this.state.mark} onChange={this.uploadMark}/>
                         </p><p>
-                        <input type="button" value="insert"/>
+                        <input type="button" value="insert" onClick={this.insert}/>
                         </p>                        
                     </form>
                 }
